@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U+FE0E コピー機能</title>
+</head>
+<body>
+    <h1>U+FE0E コピー機能</h1>
+    <label for="repeatTimes">繰り返し回数 (1~200): </label>
+    <input type="number" id="repeatTimes" value="1" min="1" max="200">
+    <button onclick="copyToClipboard()">コピー</button>
+
+    <p id="result"></p>
+
+    <script>
+        function copyToClipboard() {
+            var times = document.getElementById("repeatTimes").value;
+            var unicodeChar = '\uFE0E';
+            var result = unicodeChar.repeat(times);
+
+            // 一時的にテキストエリアを作成してコピーする
+            var tempTextArea = document.createElement("textarea");
+            tempTextArea.value = result;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+
+            // コピーした内容を表示
+            document.getElementById("result").innerText = "コピーした文字列がクリップボードに保存されました";
+        }
+    </script>
+</body>
+</html>
