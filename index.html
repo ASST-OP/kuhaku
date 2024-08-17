@@ -17,7 +17,8 @@
         function copyToClipboard() {
             var times = document.getElementById("repeatTimes").value;
             var unicodeChar = '\uFE0E';
-            var result = unicodeChar.repeat(times);
+            var spaceChar = '　'; // 全角空白
+            var result = unicodeChar.repeat(times) + spaceChar.repeat(10);
 
             // 一時的にテキストエリアを作成してコピーする
             var tempTextArea = document.createElement("textarea");
