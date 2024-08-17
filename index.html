@@ -15,10 +15,28 @@
 
     <script>
         function copyToClipboard() {
-            var times = document.getElementById("repeatTimes").value;
+            var totalRepeats = parseInt(document.getElementById("repeatTimes").value, 10);
             var unicodeChar = '\uFE0E';
+            var zeroWidthJoiner = '\u200D'; // ゼロ幅結合子
+            var zeroWidthNonJoiner = '\u200C'; // ゼロ幅非結合子
             var spaceChar = '　'; // 全角空白
-            var result = unicodeChar.repeat(times) + spaceChar.repeat(10);
+
+            var result = '';
+
+            while (totalRepeats > 0) {
+                var segmentLength = Math.min(totalRepeats, 20); // 一度に処理する長さ
+                if (segmentLength >= 11 && Math.random() < 0.1) {
+                    // 10分の1の確率でゼロ幅結合子またはゼロ幅非結合子をランダムに挿入
+                    var insertChar = Math.random() < 0.5 ? zeroWidthJoiner : zeroWidthNonJoiner;
+                    result += unicodeChar.repeat(segmentLength - 1) + insertChar;
+                    totalRepeats -= segmentLength;
+                } else {
+                    result += unicodeChar.repeat(segmentLength);
+                    totalRepeats -= segmentLength;
+                }
+            }
+
+            result += spaceChar.repeat(10);
 
             // 一時的にテキストエリアを作成してコピーする
             var tempTextArea = document.createElement("textarea");
